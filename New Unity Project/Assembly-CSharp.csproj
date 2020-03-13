@@ -57,7 +57,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ActionTest.cs" />
      <Compile Include="Assets\Scripts\ControllerGrabObject.cs" />
-     <Compile Include="Assets\Scripts\TestLog.cs" />
+     <Compile Include="Assets\Scripts\LaserPointer.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/Freddie/Documents/Unity Projects/Adventures In VR/New Unity Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

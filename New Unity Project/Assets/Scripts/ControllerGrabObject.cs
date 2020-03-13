@@ -27,7 +27,6 @@ public class ControllerGrabObject : MonoBehaviour
   // 1
   public void OnTriggerEnter(Collider other)
   {
-    Debug.Log("Entered!");
     SetCollidingObject(other);
   }
 
@@ -80,8 +79,6 @@ public class ControllerGrabObject : MonoBehaviour
       GetComponent<FixedJoint>().connectedBody = null;
       Destroy(GetComponent<FixedJoint>());
       // 3
-      Debug.Log(objectInHand.GetComponent<Rigidbody>().velocity);
-      Debug.Log(controllerPose.GetVelocity());
       objectInHand.GetComponent<Rigidbody>().velocity = controllerPose.GetVelocity();
       objectInHand.GetComponent<Rigidbody>().angularVelocity = controllerPose.GetAngularVelocity();
 

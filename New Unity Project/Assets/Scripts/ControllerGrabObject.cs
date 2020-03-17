@@ -54,6 +54,11 @@ public class ControllerGrabObject : MonoBehaviour
     objectInHand = collidingObject;
     collidingObject = null;
     // 2
+
+    //Align object
+
+    if(objectInHand.CompareTag("Pickup")) objectInHand.transform.SetPositionAndRotation(controllerPose.transform.position, controllerPose.transform.rotation);
+
     var joint = AddFixedJoint();
     joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
   }

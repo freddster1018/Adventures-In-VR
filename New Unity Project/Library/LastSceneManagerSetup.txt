@@ -1,5 +1,0 @@
-sceneSetups:
-- path: Assets/Vr_test_Joe_da_best.unity
-  isLoaded: 1
-  isActive: 1
-  isSubScene: 0

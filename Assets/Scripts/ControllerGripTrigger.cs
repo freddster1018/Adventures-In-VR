@@ -97,7 +97,8 @@ public class ControllerGrabTrigger : MonoBehaviour
     void ActivateObject()
     {
         //get reference to the script - Should probably just store this with the object
-        Gun gun = objectInHand.GetComponent(typeof(Gun)) as Gun; //how to make this more generic?
+        // TODO <- This might not be able to find the component as it is on the object which is the grandchild?
+        Gun gun = objectInHand.GetComponentInChildren(typeof(Gun)) as Gun; //how to make this more generic?
 
         gun.Shoot();
     }
@@ -131,7 +132,10 @@ public class ControllerGrabTrigger : MonoBehaviour
         {
             if (objectInHand)
             {
-                ActivateObject();
+                if (objectInHand.CompareTag("Pickup"))
+                {
+                    ActivateObject();
+                }
             }
         }
 

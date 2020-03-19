@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Gun : MonoBehaviour
+public class Gun : MonoBehaviour, IPickupActionable
 {
 
     public float damage = 10.0f;
@@ -21,35 +21,36 @@ public class Gun : MonoBehaviour
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
-            Shoot();
+            Action();
         }
     }
 
-    public void Shoot()
+public void Action()
+  {
+    muzzleFlash.Play();
+
+    RaycastHit hit;
+    if (Physics.Raycast(end.transform.position, end.transform.forward, out hit))
     {
-        muzzleFlash.Play();
 
-        RaycastHit hit;
-        if (Physics.Raycast(end.transform.position, end.transform.forward, out hit))
-        {
-            Debug.Log(hit.transform.name);
-
-            Target target = hit.transform.GetComponent<Target>();
-            if (target != null)
-            {
-                target.TakeDamage(damage);
-            }
-
-            if (hit.rigidbody != null)
-            {
-                hit.rigidbody.AddForce(hit.normal);
-            }
-
-            GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impact, 2f);
-        }
-
+      Debug.Log(hit.transform.name);
+      
+      Target target = hit.transform.GetComponent<Target>();
+      if (target != null)
+      {
+          target.TakeDamage(damage);
+      }
+      
+      if (hit.rigidbody != null)
+      {
+          hit.rigidbody.AddForce(-hit.normal*impactForce);
+      }
+      
+      GameObject impact = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+      Destroy(impact, 2f);
     }
+
+  }
 
 
 }

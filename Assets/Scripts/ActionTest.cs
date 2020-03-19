@@ -8,6 +8,7 @@ public class ActionTest : MonoBehaviour
   public SteamVR_Input_Sources handType; // 1 
   public SteamVR_Action_Boolean teleportAction; // 2
   public SteamVR_Action_Boolean grabAction; // 3 
+  public SteamVR_Action_Boolean triggerAction; // 3 
 
 
   public bool GetTeleportDown() // 1
@@ -20,6 +21,11 @@ public class ActionTest : MonoBehaviour
     return grabAction.GetState(handType);
   }
 
+  public bool GetTrigger()
+  {
+    return triggerAction.GetState(handType);
+  }
+
 void Update()
   {
     if(GetTeleportDown())
@@ -30,6 +36,11 @@ void Update()
     if(GetGrab())
     {
       print("Grab " + handType);
+    }
+
+    if (GetTrigger())
+    {
+      print("Trigger " + handType);
     }
   }
 }

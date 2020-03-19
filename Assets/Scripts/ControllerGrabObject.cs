@@ -9,9 +9,16 @@ public class ControllerGrabObject : MonoBehaviour
   public SteamVR_Input_Sources handType;
   public SteamVR_Behaviour_Pose controllerPose;
   public SteamVR_Action_Boolean grabAction;
+  public SteamVR_Action_Boolean triggerAction;
 
-  private GameObject collidingObject; // 1
-  private GameObject objectInHand; // 2
+  private GameObject collidingObject;
+  private GameObject objectInHand;
+  private IPickupActionable heldItem;
+
+  //interactable object
+  //Set this when you enter a collider
+  //private GameObject interactionZoneObject;
+  //private IPickupActionable interactionZone;
 
   private void SetCollidingObject(Collider col)
   {
@@ -53,11 +60,12 @@ public class ControllerGrabObject : MonoBehaviour
     // 1
     objectInHand = collidingObject;
     collidingObject = null;
+    heldItem = objectInHand.GetComponent<IPickupActionable>();
     // 2
 
     //Align object
 
-    if(objectInHand.CompareTag("Pickup")) objectInHand.transform.SetPositionAndRotation(controllerPose.transform.position, controllerPose.transform.rotation);
+    //if(objectInHand.CompareTag("Pickup")) objectInHand.transform.SetPositionAndRotation(controllerPose.transform.position, controllerPose.transform.rotation);
 
     var joint = AddFixedJoint();
     joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
@@ -71,9 +79,6 @@ public class ControllerGrabObject : MonoBehaviour
     fx.breakTorque = 20000;
     return fx;
   }
-
-
-
 
   private void ReleaseObject()
   {
@@ -90,6 +95,7 @@ public class ControllerGrabObject : MonoBehaviour
     }
     // 4
     objectInHand = null;
+    heldItem = null;
   }
 
 
@@ -104,6 +110,8 @@ public class ControllerGrabObject : MonoBehaviour
       {
         GrabObject();
       }
+
+      //Do a thing with interactions yknow!
     }
 
     // 2
@@ -115,5 +123,20 @@ public class ControllerGrabObject : MonoBehaviour
       }
     }
 
+    if (triggerAction.GetLastStateUp(handType))
+    {
+      if (objectInHand)
+      {
+        //invoke action
+        if (heldItem != null)
+        {
+          //import as an interface?
+          heldItem.Action();
+        }
+
+        //if interaction object isn't done
+        //invoke action
+      }
+    }
   }
 }

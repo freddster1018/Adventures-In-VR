@@ -20,11 +20,11 @@ public class SimpleCar : MonoBehaviour
 
     private Vector3 visualWheelOffset = Vector3.zero;
 
-    [SerializeField]
-    private Text speedText;
+    //[SerializeField]
+    //private Text speedText;
 
-    [SerializeField]
-    private Text gearText;
+    //[SerializeField]
+    //private Text gearText;
 
     // Start is called before the first frame update
     void Start()
@@ -34,8 +34,8 @@ public class SimpleCar : MonoBehaviour
         visualWheelOffset = axleInfos[0].LeftWheel.transform.GetChild(0).eulerAngles;
 
         currentGear = gears[0];
-        speedText.text = "Speed: 0";
-        gearText.text = "Gear: 1";
+        //speedText.text = "Speed: 0";
+        //gearText.text = "Gear: 1";
 
         for (int i = 0; i < axleInfos.Length; i++)
         {
@@ -70,7 +70,7 @@ public class SimpleCar : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && currentIndex != 0) currentGear = gears[currentIndex - 1];
         if (Input.GetKeyDown(KeyCode.E) && currentIndex != gears.Count - 1) currentGear = gears[currentIndex + 1];
 
-        gearText.text = "Gear: " + (gears.IndexOf(currentGear) + 1).ToString();
+        //gearText.text = "Gear: " + (gears.IndexOf(currentGear) + 1).ToString();
     }
 
     public void ControlCar()
@@ -79,7 +79,7 @@ public class SimpleCar : MonoBehaviour
         float steering = currentGear.MaxSteeringAngle * Input.GetAxis("Horizontal");
 
 
-        speedText.text = "Speed: " + rb.velocity.magnitude.ToString();
+        //speedText.text = "Speed: " + rb.velocity.magnitude.ToString();
 
         if (rb.velocity.magnitude > currentGear.MinimumSpeed) motor *= 2.0f;
         else motor *= 0.25f;

@@ -14,25 +14,26 @@ public class Gun : MonoBehaviour, IPickupActionable
 
     private float nextTimeToFire = 0f;
 
+    private bool triggerDown = false;
+
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
-        {
-            nextTimeToFire = Time.time + 1f / fireRate;
-            Action();
-        }
+       if (Time.time >= nextTimeToFire && triggerDown) //Input.GetButton("Fire1")
+       {
+          nextTimeToFire = Time.time + 1f / fireRate;
+          Shoot();
+       }
     }
 
-public void Action()
+  public void Shoot()
   {
     muzzleFlash.Play();
 
     RaycastHit hit;
     if (Physics.Raycast(end.transform.position, end.transform.forward, out hit))
     {
-
       Debug.Log(hit.transform.name);
       
       Target target = hit.transform.GetComponent<Target>();
@@ -52,5 +53,23 @@ public void Action()
 
   }
 
+  public void GrabUp() { }
+  public void GrabDown() { }
 
+  public void OnEnter() { }
+
+  public void OnExit() 
+  {
+    triggerDown = false;
+  }
+
+  public void TriggerUp() 
+  {
+    triggerDown = false;
+  }
+
+  public void TriggerDown()
+  {
+    triggerDown = true;
+  }
 }

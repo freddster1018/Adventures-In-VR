@@ -4,5 +4,10 @@ using UnityEngine;
 
 public interface IPickupActionable
 {
-  void Action();
+  void OnEnter();
+  void OnExit();
+  void GrabUp();
+  void GrabDown();
+  void TriggerUp();
+  void TriggerDown();
 }

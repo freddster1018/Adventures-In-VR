@@ -12,23 +12,44 @@ public class ControllerGrabObject : MonoBehaviour
   public SteamVR_Action_Boolean triggerAction;
 
   private GameObject collidingObject;
+
   private GameObject objectInHand;
   private IPickupActionable heldItem;
 
   //interactable object
   //Set this when you enter a collider
-  //private GameObject interactionZoneObject;
-  //private IPickupActionable interactionZone;
+  private GameObject interactionZoneObject;
+  private IPickupActionable interactionZone;
 
   private void SetCollidingObject(Collider col)
   {
-    // 1
-    if (collidingObject || !col.GetComponent<Rigidbody>())
+    if (collidingObject) return;
+
+    if(col.GetComponent<Rigidbody>() || col.CompareTag("InteractionZone")) collidingObject = col.gameObject;
+
+    if (col.CompareTag("InteractionZone"))
+    {
+      interactionZoneObject = collidingObject;
+      interactionZone = interactionZoneObject.GetComponent<IPickupActionable>();
+      interactionZone.OnEnter();
+    }
+  }
+
+  private void RemoveCollidingObject(Collider col)
+  {
+    if (!collidingObject)
     {
       return;
     }
-    // 2
-    collidingObject = col.gameObject;
+
+    if (col.CompareTag("InteractionZone"))
+    {
+      interactionZone.OnExit();
+      interactionZoneObject = null;
+      interactionZone = null;
+    }
+
+    collidingObject = null;
   }
 
   // 1
@@ -46,32 +67,23 @@ public class ControllerGrabObject : MonoBehaviour
   // 3
   public void OnTriggerExit(Collider other)
   {
-    if (!collidingObject)
-    {
-      return;
-    }
-
-    collidingObject = null;
+    RemoveCollidingObject(other);
   }
 
 
   private void GrabObject()
   {
-    // 1
     objectInHand = collidingObject;
     collidingObject = null;
     heldItem = objectInHand.GetComponent<IPickupActionable>();
-    // 2
 
     //Align object
-
-    //if(objectInHand.CompareTag("Pickup")) objectInHand.transform.SetPositionAndRotation(controllerPose.transform.position, controllerPose.transform.rotation);
+    //if(objectInHand.CompareTag("Align")) objectInHand.transform.SetPositionAndRotation(controllerPose.transform.position, controllerPose.transform.rotation);
 
     var joint = AddFixedJoint();
     joint.connectedBody = objectInHand.GetComponent<Rigidbody>();
   }
 
-  // 3
   private FixedJoint AddFixedJoint()
   {
     FixedJoint fx = gameObject.AddComponent<FixedJoint>();
@@ -82,44 +94,62 @@ public class ControllerGrabObject : MonoBehaviour
 
   private void ReleaseObject()
   {
-    // 1
     if (GetComponent<FixedJoint>())
     {
-      // 2
       GetComponent<FixedJoint>().connectedBody = null;
       Destroy(GetComponent<FixedJoint>());
-      // 3
       objectInHand.GetComponent<Rigidbody>().velocity = controllerPose.GetVelocity();
       objectInHand.GetComponent<Rigidbody>().angularVelocity = controllerPose.GetAngularVelocity();
 
     }
-    // 4
     objectInHand = null;
     heldItem = null;
   }
 
-
-
   // Update is called once per frame
   void Update()
     {
-    // 1
     if (grabAction.GetLastStateDown(handType))
     {
       if (collidingObject)
       {
-        GrabObject();
-      }
+        if(collidingObject.CompareTag("Pickup"))
+        {
+          GrabObject();
+        }
 
-      //Do a thing with interactions yknow!
+        else if (collidingObject.CompareTag("InteractionZone"))
+        {
+          interactionZone.GrabDown();
+        }
+      }
     }
 
-    // 2
     if (grabAction.GetLastStateUp(handType))
     {
       if (objectInHand)
       {
         ReleaseObject();
+      }
+
+      if (interactionZone != null)
+      {
+        interactionZone.GrabUp();
+      }
+    }
+
+    if (triggerAction.GetLastStateDown(handType))
+    {
+      if (objectInHand)
+      {
+        //invoke action
+        if (heldItem != null)
+        {
+          //import as an interface?
+          heldItem.TriggerDown();
+        }
+        //if interaction object isn't done
+        //invoke action
       }
     }
 
@@ -131,9 +161,8 @@ public class ControllerGrabObject : MonoBehaviour
         if (heldItem != null)
         {
           //import as an interface?
-          heldItem.Action();
+          heldItem.TriggerUp();
         }
-
         //if interaction object isn't done
         //invoke action
       }

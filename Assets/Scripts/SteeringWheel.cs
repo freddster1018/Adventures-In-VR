@@ -3,36 +3,81 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 
-public class SteeringWheel : MonoBehaviour
+public class SteeringWheel : MonoBehaviour, IPickupActionable
 {
   public GameObject h1;
   public GameObject h2;
 
-  public SteamVR_Action_Boolean grabAction;
+  public float wheelAngle = 0;
+
+  public float maxWheelAngle = 360;
+  public float minWheelAngle = 0;
+
+  bool gripDown = false;
+
+  private void Start()
+  {
+    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,(maxWheelAngle-minWheelAngle)/2, transform.localEulerAngles.z);
+  }
+  public void OnEnter() { }
+
+  public void GrabDown()
+  {
+    gripDown = true;
+  }
+
+  public void GrabUp()
+  {
+    gripDown = false;
+  }
+
+  public void OnExit()
+  {
+    gripDown = false;
+  }
+
 
   private void OnTriggerEnter(Collider other)
   {
-    //Set h1 to look at hand
-    h1.transform.LookAt(other.transform);
+    h1.transform.LookAt(other.transform);  
   }
 
   private void OnTriggerStay(Collider other)
   {
-    SteamVR_Input_Sources handtype = other.GetComponent<SteamVR_Input_Sources>();
-    if (grabAction.GetLastStateDown(handtype))
+    if (!gripDown)
     {
-      h2.transform.LookAt(other.transform);
+
+      h1.transform.LookAt(other.transform);
     }
     else
     {
-      h1.transform.LookAt(other.transform);
+      h2.transform.LookAt(other.transform);
+      //calc diff in angles?
+      //update steering wheel?
+
+      float h2_float = h2.transform.eulerAngles.y;
+      float h1_float = h1.transform.eulerAngles.y;
+      
+      //Acounts for going over the limit
+      if(Mathf.Abs(h2_float - h1_float) >= 180.0)
+      {
+        if (h2_float < h1_float) h2_float += 360;
+        else h1_float += 360;
+      }
+      wheelAngle += h2_float - h1_float;
+      Debug.Log(wheelAngle);
+      if (wheelAngle > maxWheelAngle) wheelAngle = maxWheelAngle;
+      else if (wheelAngle < minWheelAngle) wheelAngle = minWheelAngle;
+      else
+      {
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, wheelAngle, transform.localEulerAngles.z);
+        h1.transform.LookAt(other.transform);
+      }
+      
     }
-    //if(other.isTriggerDown??)
-    //If !trigger down 
-    //    h1 looks at hand
-    //else 
-    //    h2 looks at hand
-    //    Calculate angle diff between h1 and h2
-    //    update Wheel angle
   }
+
+  public void TriggerUp() { }
+
+  public void TriggerDown() { }
 }

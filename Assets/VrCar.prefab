@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1634006834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467243784447304764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 520178c9563496148afcd96c8a38ea29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AxleInfoVRs:
+  - LeftWheel: {fileID: 467243786218511426}
+    RightWheel: {fileID: 467243784455378403}
+    Motor: 1
+    Steering: 0
+  - LeftWheel: {fileID: 467243784939523994}
+    RightWheel: {fileID: 467243784455378403}
+    Motor: 0
+    Steering: 1
+  gears:
+  - MaxMotorTorque: 1000
+    MaxSteeringAngle: 30
+    MinimumSpeed: 10
+  - MaxMotorTorque: 2000
+    MaxSteeringAngle: 30
+    MinimumSpeed: 10
+  - MaxMotorTorque: 1000000
+    MaxSteeringAngle: 1
+    MinimumSpeed: 30
+  brakespeed: 300
+  acel: 0
+  steer: 0
+  steering: {fileID: 0}
+  lever: {fileID: 0}
+--- !u!1001 &6748217117078934386
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6619587807504430926, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_Name
+      value: Car
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.995707
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.167
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.8067996
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430921, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430920, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: gears.Array.data[0].MaxMotorTorque
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430920, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: gears.Array.data[1].MaxMotorTorque
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430920, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: brakespeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807504430920, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6619587807608707389, guid: 8f5939c188ffb584c850515ff272d122,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.463
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8f5939c188ffb584c850515ff272d122, type: 3}
+--- !u!1 &467243784447304764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6619587807504430926, guid: 8f5939c188ffb584c850515ff272d122,
+    type: 3}
+  m_PrefabInstance: {fileID: 6748217117078934386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &467243784455378403 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 6619587807495816849, guid: 8f5939c188ffb584c850515ff272d122,
+    type: 3}
+  m_PrefabInstance: {fileID: 6748217117078934386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &467243786218511426 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 6619587806125838128, guid: 8f5939c188ffb584c850515ff272d122,
+    type: 3}
+  m_PrefabInstance: {fileID: 6748217117078934386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &467243784939523994 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 6619587806977531112, guid: 8f5939c188ffb584c850515ff272d122,
+    type: 3}
+  m_PrefabInstance: {fileID: 6748217117078934386}
+  m_PrefabAsset: {fileID: 0}

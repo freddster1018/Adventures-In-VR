@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SimpleCar : MonoBehaviour
+public class SimpleCarVR : MonoBehaviour
 {
     [SerializeField]
-    public AxleInfo[] axleInfos;
+    public AxleInfoVR[] AxleInfoVRs;
 
     [SerializeField]
-    public List<GearInfo> gears = new List<GearInfo>();
+    public List<GearInfoVR> gears = new List<GearInfoVR>();
 
-    private GearInfo currentGear;
+    private GearInfoVR currentGear;
 
     [SerializeField]
     private float brakespeed = 80.0f;
+
+    public float acel = 0;
+    public float steer = 0;
+
+    public SteeringWheel steering;
+    public SteeringWheel lever;
 
     private Rigidbody rb;
 
@@ -31,15 +37,15 @@ public class SimpleCar : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
 
-        visualWheelOffset = axleInfos[0].LeftWheel.transform.GetChild(0).eulerAngles;
+        visualWheelOffset = AxleInfoVRs[0].LeftWheel.transform.GetChild(0).eulerAngles;
 
         currentGear = gears[0];
         //speedText.text = "Speed: 0";
         //gearText.text = "Gear: 1";
 
-        for (int i = 0; i < axleInfos.Length; i++)
+        for (int i = 0; i < AxleInfoVRs.Length; i++)
         {
-            AxleInfo axle = axleInfos[i];
+            AxleInfoVR axle = AxleInfoVRs[i];
 
             axle.RightWheel.ConfigureVehicleSubsteps(20, 12, 16);
             axle.LeftWheel.ConfigureVehicleSubsteps(20, 12, 16);
@@ -51,6 +57,9 @@ public class SimpleCar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    steer = 2.0f * ((steering.wheelAngle - (steering.minWheelAngle)) / (steering.maxWheelAngle-steering.minWheelAngle)) - 1.0f;
+    acel = 2.0f * ((lever.wheelAngle - (lever.minWheelAngle)) / (lever.maxWheelAngle - lever.minWheelAngle)) - 1.0f;
+
         if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E))
         {
             ChangeGear();
@@ -75,8 +84,8 @@ public class SimpleCar : MonoBehaviour
 
     public void ControlCar()
     {
-        float motor = currentGear.MaxMotorTorque * Input.GetAxis("Vertical");
-        float steering = currentGear.MaxSteeringAngle * Input.GetAxis("Horizontal");
+        float motor = currentGear.MaxMotorTorque * acel;
+        float steering = currentGear.MaxSteeringAngle * steer;
 
 
         //speedText.text = "Speed: " + rb.velocity.magnitude.ToString();
@@ -90,9 +99,9 @@ public class SimpleCar : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < axleInfos.Length; i++)
+        for (int i = 0; i < AxleInfoVRs.Length; i++)
         {
-            AxleInfo axle = axleInfos[i];
+            AxleInfoVR axle = AxleInfoVRs[i];
 
             //Adjust steering
             if (axle.Steering)
@@ -117,9 +126,9 @@ public class SimpleCar : MonoBehaviour
 
     private void Brake()
     {
-        for (int i = 0; i < axleInfos.Length; i++)
+        for (int i = 0; i < AxleInfoVRs.Length; i++)
         {
-            AxleInfo axle = axleInfos[i];
+            AxleInfoVR axle = AxleInfoVRs[i];
 
             if (axle.Motor)
             {
@@ -153,8 +162,8 @@ public class SimpleCar : MonoBehaviour
     }
 }
 
-//[System.Serializable]
-public struct AxleInfo
+[System.Serializable]
+public struct AxleInfoVR
 {
     public WheelCollider LeftWheel;
     public WheelCollider RightWheel;
@@ -162,8 +171,8 @@ public struct AxleInfo
     public bool Steering;
 }
 
-//[System.Serializable]
-public struct GearInfo
+[System.Serializable]
+public struct GearInfoVR
 {
     public float MaxMotorTorque;
     public float MaxSteeringAngle;

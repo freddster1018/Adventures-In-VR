@@ -4763,7 +4763,7 @@ GameObject:
   - component: {fileID: 6584154041402235082}
   m_Layer: 0
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9568,11 +9568,12 @@ GameObject:
   - component: {fileID: 6584154041671603649}
   - component: {fileID: 6584154041671603648}
   - component: {fileID: 6584154041671603655}
-  - component: {fileID: 906069100}
   - component: {fileID: 906069101}
+  - component: {fileID: 906069100}
+  - component: {fileID: 5097664855338424458}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Gun
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9651,6 +9652,25 @@ CapsuleCollider:
   m_Height: 2.0299373
   m_Direction: 1
   m_Center: {x: 0.000000059326993, y: 0.0016827583, z: -0.000000118653986}
+--- !u!114 &906069101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6584154041671603653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b3bf96592fbc640a7aa324d1a499e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  range: 100
+  impactForce: 300
+  fireRate: 15
+  end: {fileID: 6584154041560319520}
+  muzzleFlash: {fileID: 6584154041095941972}
+  impactEffect: {fileID: 6584154041112662205}
 --- !u!54 &906069100
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9667,7 +9687,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &906069101
+--- !u!114 &5097664855338424458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

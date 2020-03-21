@@ -15,19 +15,17 @@ public class SteeringWheel : MonoBehaviour, IPickupActionable
 
   bool gripDown = false;
 
-  private void Start()
-  {
-    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,(maxWheelAngle-minWheelAngle)/2, transform.localEulerAngles.z);
-  }
   public void OnEnter() { }
 
   public void GrabDown()
   {
+    Debug.Log("Down!");
     gripDown = true;
   }
 
   public void GrabUp()
   {
+    Debug.Log("Up!");
     gripDown = false;
   }
 
@@ -54,26 +52,17 @@ public class SteeringWheel : MonoBehaviour, IPickupActionable
       h2.transform.LookAt(other.transform);
       //calc diff in angles?
       //update steering wheel?
-
       float h2_float = h2.transform.eulerAngles.y;
       float h1_float = h1.transform.eulerAngles.y;
-      
-      //Acounts for going over the limit
-      if(Mathf.Abs(h2_float - h1_float) >= 180.0)
-      {
-        if (h2_float < h1_float) h2_float += 360;
-        else h1_float += 360;
-      }
       wheelAngle += h2_float - h1_float;
-      Debug.Log(wheelAngle);
+
       if (wheelAngle > maxWheelAngle) wheelAngle = maxWheelAngle;
       else if (wheelAngle < minWheelAngle) wheelAngle = minWheelAngle;
       else
       {
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, wheelAngle, transform.localEulerAngles.z);
-        h1.transform.LookAt(other.transform);
       }
-      
+      h1.transform.LookAt(other.transform);
     }
   }
 
